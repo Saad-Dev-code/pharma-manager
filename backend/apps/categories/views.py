@@ -1,3 +1,9 @@
 from django.shortcuts import render
 
-# Create your views here.
+from rest_framework import viewsets
+from .models import Categorie
+from .serializers import CategorieSerializer
+
+class CategoriesViewSet(viewsets.ModelViewSet):
+    queryset = Categorie.objects.all()
+    serializer_class = CategorieSerializer

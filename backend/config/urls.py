@@ -17,6 +17,21 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from rest_framework import routers
+from apps.medicaments.views import MedicamentViewSet
+from apps.categories.views import CategoriesViewSet
+from apps.ventes.views import VenteViewSet
+
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+
+router = routers.DefaultRouter()
+router.register(r'medicaments', MedicamentViewSet)
+router.register(r'categories', CategoriesViewSet)
+router.register(r'ventes', VenteViewSet)
+
+urlpatterns = router.urls
