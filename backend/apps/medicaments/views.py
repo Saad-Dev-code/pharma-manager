@@ -1,10 +1,13 @@
 from django.shortcuts import render
 
+from apps.categories import serializers
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .models import Medicament
 from .serializers import MedicamentSerializer
+from django.db import models
+
 
 class MedicamentViewSet(viewsets.ModelViewSet):
     queryset = Medicament.objects.filter(est_actif=True)
@@ -23,3 +26,5 @@ class MedicamentViewSet(viewsets.ModelViewSet):
         alertes = Medicament.objects.filter(stock_actuel__lte=models.F('stock_minimum'), est_actif=True)
         serializer = self.get_serializer(alertes, many=True)
         return Response(serializer.data)
+    
+    
