@@ -1,4 +1,3 @@
-# apps/accounts/serializers.py
 from django.contrib.auth.models import User
 from apps.accounts.models import LoginLog
 from rest_framework import serializers

@@ -3,7 +3,7 @@ import Button from "../common/Button";
 import MedicamentForm from "./MedicamentForm";
 import { deleteMedicament } from "../../api/medicamentsApi";
 import { getMedicaments } from "../../api/medicamentsApi";
-import MedicamentViewModal from "./MedicamentViewModal"; // <-- import
+import MedicamentViewModal from "./MedicamentViewModal"; 
 
 export default function MedicamentTable({ medicaments, refresh }) {
   const [editing, setEditing] = useState(null);
@@ -19,7 +19,7 @@ export default function MedicamentTable({ medicaments, refresh }) {
     refresh();
   };
 
-  // Filtrer les médicaments selon la recherche
+  // Filtrer les médicaments 
   const filteredMeds = useMemo(() => {
     if (!search) return medicaments;
     const lower = search.toLowerCase();

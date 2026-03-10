@@ -68,7 +68,7 @@ class LogoutAPIView(APIView):
         except Exception:
             return Response({"error": "Refresh token invalide ou déjà utilisé"}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Fermer toutes les sessions actives de cet utilisateur (pour limitation à 1 session)
+        # Fermer toutes les sessions actives de cet utilisateur 
         active_logs = LoginLog.objects.filter(user=request.user, logout_time__isnull=True)
         for log in active_logs:
             log.logout_time = now()

@@ -8,7 +8,6 @@ export default function VenteForm({ onClose }) {
   const [lignes, setLignes] = useState([]);
   const [notes, setNotes] = useState("");
 
-  // Charger les médicaments au montage
   useEffect(() => {
     async function fetch() {
       const data = await getMedicaments();
@@ -16,7 +15,6 @@ export default function VenteForm({ onClose }) {
     }
     fetch();
 
-    // Ajouter une ligne vide par défaut
     setLignes([{ medicament: "", quantite: 1 }]);
   }, []);
 
@@ -55,7 +53,7 @@ const submit = async () => {
     };
   });
 
-  // Calculer total_ttc avant envoi
+  // Calculer total_ttc
   const total_ttc = payloadLignes.reduce((sum, l) => sum + l.sous_total, 0);
 
   // Générer référence unique automatiquement
@@ -64,13 +62,13 @@ const submit = async () => {
   try {
     await addVente({
       reference,
-      statut: "validée", // statut par défaut
+      statut: "validée",
       lignes_vente: payloadLignes,
       total_ttc,  
-      notes,        // <--- nécessaire pour éviter l'erreur 400
+      notes,       
     });
 
-    refresh(); // mettre à jour le tableau des ventes
+    refresh(); 
     onClose();
   } catch (err) {
     console.error(err.response?.data || err);

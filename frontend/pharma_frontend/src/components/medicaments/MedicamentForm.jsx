@@ -179,7 +179,7 @@ const submit = async (e) => {
     />
   </div>
 
-  {/* Bouton pleine largeur */}
+  {/* Bouton  */}
   <div className="form-full">
     <Button type="submit">
       {medicament ? "Modifier" : "Ajouter"}

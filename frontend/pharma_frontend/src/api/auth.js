@@ -1,4 +1,3 @@
-// src/api/auth.js
 import api from './axiosConfig';
 
 export const register = (payload) => api.post('auth/register/', payload);

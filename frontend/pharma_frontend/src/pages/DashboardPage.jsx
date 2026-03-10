@@ -1,4 +1,3 @@
-// src/pages/DashboardPage.jsx
 import { useEffect, useState, useMemo } from "react";
 import StatCard from "../components/dashboard/StatCard";
 import { useMedicaments } from "../hooks/useMedicaments";

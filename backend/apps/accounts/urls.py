@@ -1,4 +1,3 @@
-# apps/accounts/urls.py
 from django.urls import path
 from .views import LoginLogListAPIView, RegisterAPIView, MeAPIView , CustomTokenObtainPairView , LogoutAPIView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView

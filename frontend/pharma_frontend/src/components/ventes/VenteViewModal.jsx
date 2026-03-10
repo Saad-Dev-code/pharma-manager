@@ -1,4 +1,3 @@
-// src/components/ventes/VenteViewModal.jsx
 import Modal from "../common/Modal";
 import Button from "../common/Button";
 
