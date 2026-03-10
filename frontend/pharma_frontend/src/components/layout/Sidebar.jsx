@@ -15,17 +15,25 @@ export default function Sidebar() {
     { name: "Profil", path: "/profile" },
     { name: "Logs", path: "/logs" }
   ];
-
 const handleLogout = async () => {
   try {
-    const token = localStorage.getItem("access");
+    const accessToken = localStorage.getItem("access");
+    const refreshToken = localStorage.getItem("refresh");
+
+    if (!refreshToken) {
+      console.error("Refresh token manquant");
+      logout();
+      navigate("/login");
+      return;
+    }
 
     await fetch("http://127.0.0.1:8000/api/auth/logout/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
+      body: JSON.stringify({ refresh: refreshToken }),
     });
 
   } catch (error) {

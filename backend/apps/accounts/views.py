@@ -14,6 +14,7 @@ from django.utils.timezone import now
 from .models import LoginLog
 from .serializers import LoginLogSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.utils.timezone import now
 
 
 class RegisterAPIView(generics.CreateAPIView):
@@ -57,17 +58,20 @@ class LogoutAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        refresh_token = request.data.get("refresh")
+        if not refresh_token:
+            return Response({"error": "Refresh token requis"}, status=status.HTTP_400_BAD_REQUEST)
+
         try:
-            refresh_token = request.data["refresh"]
             token = RefreshToken(refresh_token)
             token.blacklist()
-
-            return Response(
-                {"message": "Logged out successfully"},
-                status=status.HTTP_205_RESET_CONTENT
-            )
         except Exception:
-            return Response(
-                {"error": "Invalid token"},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"error": "Refresh token invalide ou déjà utilisé"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Fermer toutes les sessions actives de cet utilisateur (pour limitation à 1 session)
+        active_logs = LoginLog.objects.filter(user=request.user, logout_time__isnull=True)
+        for log in active_logs:
+            log.logout_time = now()
+            log.save()
+
+        return Response({"message": "Déconnexion réussie"}, status=status.HTTP_205_RESET_CONTENT)
