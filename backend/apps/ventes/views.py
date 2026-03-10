@@ -7,11 +7,12 @@ from apps.medicaments.models import Medicament
 from .models import Vente, LigneVente
 from .serializers import VenteSerializer, LigneVenteSerializer
 from django.db import transaction
+from rest_framework.permissions import IsAuthenticated
 
 class VenteViewSet(viewsets.ModelViewSet):
     queryset = Vente.objects.all()
     serializer_class = VenteSerializer
-
+    permission_classes = [IsAuthenticated]  
 
     @action(detail=True, methods=['post'])
     def annuler(self, request, pk=None):

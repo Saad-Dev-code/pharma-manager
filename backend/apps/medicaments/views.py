@@ -7,11 +7,13 @@ from rest_framework.response import Response
 from .models import Medicament
 from .serializers import MedicamentSerializer
 from django.db import models
+from rest_framework.permissions import IsAuthenticated
 
 
 class MedicamentViewSet(viewsets.ModelViewSet):
     queryset = Medicament.objects.filter(est_actif=True)
     serializer_class = MedicamentSerializer
+    permission_classes = [IsAuthenticated]
 
     # Soft delete 
     def destroy(self, request, *args, **kwargs):
