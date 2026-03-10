@@ -91,82 +91,105 @@ export default function DashboardPage() {
   }, [medicaments]);
 
   return (
-    <div style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      <h1 style={{ marginBottom: "2rem", fontSize: "2rem" }}>
-        Tableau de bord
-      </h1>
+  <div
+    style={{
+      padding: "32px",
+      maxWidth: "1400px",
+      margin: "0 auto",
+      fontFamily: "sans-serif",
+    }}
+  >
+    <h1
+      style={{
+        marginBottom: "32px",
+        fontSize: "28px",
+        fontWeight: "600",
+      }}
+    >
+      Tableau de bord
+    </h1>
 
-      {/* KPI Cards */}
+    {/* KPI Cards */}
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+        gap: "24px",
+        marginBottom: "32px",
+      }}
+    >
+      <StatCard title="Médicaments" value={totalMedicaments} icon="💊" color="#4f46e5" />
+      <StatCard title="Ventes" value={totalVentes} icon="🛒" color="#10b981" />
+      <StatCard title="Catégories" value={totalCategories} icon="📂" color="#f59e0b" />
+      <StatCard title="Alertes" value={totalAlertes} icon="⚠️" color="#ef4444" />
+    </div>
+
+    {/* Alertes */}
+    {alertes.length > 0 && (
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "1.5rem",
+          marginBottom: "32px",
+          padding: "20px 24px",
+          borderRadius: "10px",
+          backgroundColor: "#fff3f2",
+          border: "1px solid #fca5a5",
         }}
       >
-        <StatCard title="Médicaments" value={totalMedicaments} icon="💊" color="#4f46e5" />
-        <StatCard title="Ventes" value={totalVentes} icon="🛒" color="#10b981" />
-        <StatCard title="Catégories" value={totalCategories} icon="📂" color="#f59e0b" />
-        <StatCard title="Alertes" value={totalAlertes} icon="⚠️" color="#ef4444" />
+        <h3 style={{ marginBottom: "12px", color: "#b91c1c" }}>
+          ⚠ Alertes Stock
+        </h3>
+
+        {alertes.map((a) => (
+          <p key={a.id} style={{ marginBottom: "6px" }}>
+            <strong>{a.nom}</strong> — Stock actuel: {a.stock_actuel}
+          </p>
+        ))}
+      </div>
+    )}
+
+    {/* Graphiques */}
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "32px",
+      }}
+    >
+      <div
+        style={{
+          background: "#fff",
+          borderRadius: "12px",
+          padding: "24px",
+          boxShadow: "0 4px 14px rgba(0,0,0,0.06)",
+        }}
+      >
+        <h4 style={{ marginBottom: "20px", fontSize: "16px" }}>
+          Ventes par jour
+        </h4>
+        <Line data={ventesParJour} />
       </div>
 
-      {/* Alertes Stock */}
-      {alertes.length > 0 && (
-        <div
-          style={{
-            marginTop: "2rem",
-            padding: "1rem 1.5rem",
-            borderRadius: "8px",
-            backgroundColor: "#fff3f2",
-            border: "1px solid #fca5a5",
-          }}
-        >
-          <h3 style={{ marginBottom: "1rem", color: "#b91c1c" }}>⚠ Alertes Stock</h3>
-          {alertes.map((a) => (
-            <p key={a.id} style={{ marginBottom: "0.5rem" }}>
-              <strong>{a.nom}</strong> — Stock actuel: {a.stock_actuel}
-            </p>
-          ))}
-        </div>
-      )}
-
-      {/* Graphiques */}
       <div
         style={{
-          marginTop: "2rem",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "2rem",
+          background: "#fff",
+          borderRadius: "12px",
+          padding: "24px",
+          boxShadow: "0 4px 14px rgba(0,0,0,0.06)",
         }}
       >
-        <div
-          style={{
-            background: "#fff",
-            borderRadius: "8px",
-            padding: "1rem",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h4 style={{ marginBottom: "1rem" }}>Ventes par jour</h4>
-          <Line data={ventesParJour} />
-        </div>
+        <h4 style={{ marginBottom: "20px", fontSize: "16px" }}>
+          Stocks critiques
+        </h4>
 
-        <div
-          style={{
-            background: "#fff",
-            borderRadius: "8px",
-            padding: "1rem",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-          }}
-        >
-          <h4 style={{ marginBottom: "1rem" }}>Stocks critiques</h4>
-          {stocksCritiques.labels.length ? (
-            <Bar data={stocksCritiques} />
-          ) : (
-            <p style={{ color: "#6b7280" }}>Pas de stocks critiques</p>
-          )}
-        </div>
+        {stocksCritiques.labels.length ? (
+          <Bar data={stocksCritiques} />
+        ) : (
+          <p style={{ color: "#6b7280" }}>
+            Pas de stocks critiques
+          </p>
+        )}
       </div>
     </div>
-  );
+  </div>
+);
 }

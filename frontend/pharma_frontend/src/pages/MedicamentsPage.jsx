@@ -3,6 +3,8 @@ import MedicamentTable from "../components/medicaments/MedicamentTable";
 import MedicamentForm from "../components/medicaments/MedicamentForm";
 import { useMedicaments } from "../hooks/useMedicaments";
 import StockModal from "../components/medicaments/StockModal";
+import Button from "../components/common/Button";
+
 export default function MedicamentsPage() {
   const { medicaments, loading , refresh  } = useMedicaments();
   const [showForm, setShowForm] = useState(false);
@@ -13,13 +15,16 @@ export default function MedicamentsPage() {
       <div className="page-header">
         <h1>Médicaments</h1>
 
-        <button className="btn-primary" onClick={() => setShowForm(true)}>
+      <div style={{ display: "flex", gap: "10px" }}>
+        <Button variant="primary" onClick={() => setShowForm(true)}>
           + Ajouter
-        </button>
+        </Button>
 
-        <button className="btn-secondary" onClick={() => setShowStockModal(true)}>
-        + Ajouter au stock
-      </button>
+        <Button variant="secondary" onClick={() => setShowStockModal(true)}>
+          + Ajouter au stock
+        </Button>
+      </div>
+
       </div>
     
 

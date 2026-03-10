@@ -4,7 +4,7 @@ import { getMedicaments } from "../../api/medicamentsApi";
 import Button from "../common/Button";
 import VenteViewModal from "./VenteViewModal";
 
-export default function VenteTable() {
+export default function VenteTable({setParentVentes}) {
   const [ventes, setVentes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [medicaments, setMedicaments] = useState([]);
@@ -14,6 +14,7 @@ export default function VenteTable() {
     try {
       const data = await getVentes();
       setVentes(data);
+      setParentVentes(data);
     } catch (error) {
       console.error(error);
     } finally {

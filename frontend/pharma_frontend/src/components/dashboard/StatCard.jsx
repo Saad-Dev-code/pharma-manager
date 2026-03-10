@@ -3,25 +3,28 @@ export default function StatCard({ title, value, icon, color = "#4f46e5" }) {
     <div
       style={{
         backgroundColor: "#fff",
-        borderRadius: "12px",
-        padding: "1.5rem",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+        borderRadius: "14px",
+        padding: "24px",
+        boxShadow: "0 6px 16px rgba(0,0,0,0.05)",
         display: "flex",
         alignItems: "center",
-        gap: "1rem",
-        transition: "transform 0.2s",
-        cursor: "default",
+        gap: "16px",
+        transition: "all 0.2s ease",
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-5px)")}
-      onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+      onMouseEnter={(e) =>
+        (e.currentTarget.style.transform = "translateY(-4px)")
+      }
+      onMouseLeave={(e) =>
+        (e.currentTarget.style.transform = "translateY(0)")
+      }
     >
       <div
         style={{
-          fontSize: "2.5rem",
-          backgroundColor: color + "33",
-          borderRadius: "50%",
-          width: "50px",
-          height: "50px",
+          fontSize: "28px",
+          backgroundColor: color + "20",
+          borderRadius: "10px",
+          width: "56px",
+          height: "56px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -29,9 +32,26 @@ export default function StatCard({ title, value, icon, color = "#4f46e5" }) {
       >
         {icon}
       </div>
+
       <div>
-        <div style={{ fontSize: "1.2rem", color: "#6b7280" }}>{title}</div>
-        <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{value}</div>
+        <div
+          style={{
+            fontSize: "14px",
+            color: "#6b7280",
+            marginBottom: "4px",
+          }}
+        >
+          {title}
+        </div>
+
+        <div
+          style={{
+            fontSize: "24px",
+            fontWeight: "600",
+          }}
+        >
+          {value}
+        </div>
       </div>
     </div>
   );

@@ -78,62 +78,88 @@ const submit = async () => {
   }
 };
 
-  return (
-    <div className="modal-overlay">
-      <div className="modal large">
-        <h2>Nouvelle vente</h2>
+ 
+   return (
+  <div className="modal-overlay">
+    <div className="modal large">
+      <h2>Nouvelle vente</h2>
 
-        {lignes.map((ligne, index) => (
-          <div key={index} className="vente-ligne">
-            <select
-              value={ligne.medicament}
-              onChange={(e) =>
-                handleChange(index, "medicament", e.target.value)
-              }
-            >
-              <option value="">Médicament</option>
-              {medicaments.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.nom} ({m.stock_actuel} en stock, {m.prix_vente} DH)
-                </option>
-              ))}
-            </select>
+      <div className="vente-table">
 
-            <div className="vente-notes">
-              <label>Notes (facultatif)</label>
-              <textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder="Ajouter une note pour cette vente"
-                rows={3}
-                style={{ width: "100%", padding: "0.5rem" }}
+        <div className="vente-header">
+          <span>Médicament</span>
+          <span>Quantité</span>
+          <span>Prix</span>
+          <span>Total</span>
+        </div>
+
+        {lignes.map((ligne, index) => {
+          const med = medicaments.find(
+            (m) => m.id === Number(ligne.medicament)
+          );
+
+          const prix = med ? med.prix_vente : 0;
+          const total = prix * ligne.quantite;
+
+          return (
+            <div key={index} className="vente-row">
+
+              <select
+                value={ligne.medicament}
+                onChange={(e) =>
+                  handleChange(index, "medicament", e.target.value)
+                }
+              >
+                <option value="">Choisir médicament</option>
+                {medicaments.map((m) => (
+                  <option key={m.id} value={m.id}>
+                    {m.nom} ({m.stock_actuel} en stock)
+                  </option>
+                ))}
+              </select>
+
+              <input
+                type="number"
+                min={1}
+                value={ligne.quantite}
+                onChange={(e) =>
+                  handleChange(index, "quantite", Number(e.target.value))
+                }
               />
+
+              <span>{prix} DH</span>
+
+              <span>{total} DH</span>
+
             </div>
-
-            <input
-              type="number"
-              min={1}
-              value={ligne.quantite}
-              onChange={(e) =>
-                handleChange(index, "quantite", Number(e.target.value))
-              }
-            />
-          </div>
-        ))}
-
-           <div style={{ marginTop: "1rem", display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
-      <button className="btn-danger" onClick={onClose}>
-        Fermer
-      </button>
-      <button className="btn-primary" onClick={submit}>
-        Valider Vente
-      </button>
-      <button className="btn-secondary" onClick={addLigne}>
-        Ajouter ligne
-      </button>
-    </div>
-
+          );
+        })}
       </div>
+
+      <button className="btn-secondary" onClick={addLigne}>
+        + Ajouter ligne
+      </button>
+
+      <div className="vente-notes">
+        <label>Notes (facultatif)</label>
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Ajouter une note"
+        />
+      </div>
+
+      <div className="vente-actions">
+        <button className="btn-danger" onClick={onClose}>
+          Fermer
+        </button>
+
+        <button className="btn-primary" onClick={submit}>
+          Valider Vente
+        </button>
+      </div>
+
     </div>
-  );
+  </div>
+);
 }

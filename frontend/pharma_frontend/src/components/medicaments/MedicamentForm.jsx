@@ -79,102 +79,114 @@ const submit = async (e) => {
         {medicament ? "Modifier Médicament" : "Ajouter Médicament"}
       </h2>
 
-      <form onSubmit={submit}>
+      <form onSubmit={submit} className="form-grid">
 
-        <Input
-          label="Nom commercial"
-          name="nom"
-          value={form.nom}
-          onChange={handleChange}
-        />
-        <Input
-          label="DCI"
-          name="dci"
-          value={form.dci}
-          onChange={handleChange}
-          />
+  <Input
+    label="Nom commercial"
+    name="nom"
+    value={form.nom}
+    onChange={handleChange}
+  />
 
-        <div className="checkbox">
-          <label>Ordonnance requise</label>
+  <Input
+    label="DCI"
+    name="dci"
+    value={form.dci}
+    onChange={handleChange}
+  />
 
-          <input
-            type="checkbox"
-            checked={form.ordonnance_requise}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                ordonnance_requise: e.target.checked
-              })
-            }
-          />
-        </div>
-          <Input
-          label="Forme"
-          name="forme"
-          value={form.forme}
-          onChange={handleChange}
-          />
-            <Input
-            label="Dosage"
-            name="dosage"
-            value={form.dosage}
-            onChange={handleChange}
-            />          
+  <Input
+    label="Forme"
+    name="forme"
+    value={form.forme}
+    onChange={handleChange}
+  />
 
-        <select
-          name="categorie"
-          value={form.categorie}
-          onChange={handleChange}
-        >
-          <option>Catégorie</option>
+  <Input
+    label="Dosage"
+    name="dosage"
+    value={form.dosage}
+    onChange={handleChange}
+  />
 
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.nom}
-            </option>
-          ))}
-        </select>
+  <Input
+    label="Prix Achat"
+    name="prix_achat"
+    value={form.prix_achat}
+    onChange={handleChange}
+  />
 
-        <Input
-          label="Prix Achat"
-          name="prix_achat"
-          value={form.prix_achat}
-          onChange={handleChange}
-        />
+  <Input
+    label="Prix Vente"
+    name="prix_vente"
+    value={form.prix_vente}
+    onChange={handleChange}
+  />
 
-        <Input
-          label="Prix Vente"
-          name="prix_vente"
-          value={form.prix_vente}
-          onChange={handleChange}
-        />
+  <Input
+    label="Stock"
+    name="stock_actuel"
+    value={form.stock_actuel}
+    onChange={handleChange}
+  />
 
-        <Input
-          label="Stock"
-          name="stock_actuel"
-          value={form.stock_actuel}
-          onChange={handleChange}
-        />
+  <Input
+    label="Stock Minimum"
+    name="stock_minimum"
+    value={form.stock_minimum}
+    onChange={handleChange}
+  />
 
-        <Input
-          label="Stock Minimum"
-          name="stock_minimum"
-          value={form.stock_minimum}
-          onChange={handleChange}
-        />
+  {/* Catégorie  */}
+  <div className="form-full">
+    <label>Catégorie</label>
+    <select
+      name="categorie"
+      value={form.categorie}
+      onChange={handleChange}
+    >
+      <option value="">Choisir une catégorie</option>
 
-        <Input
-          type="date"
-          name="date_expiration"
-          value={form.date_expiration}
-          onChange={handleChange}
-        />
+      {categories.map((c) => (
+        <option key={c.id} value={c.id}>
+          {c.nom}
+        </option>
+      ))}
+    </select>
+  </div>
 
-        <Button type="submit">
-          {medicament ? "Modifier" : "Ajouter"}
-        </Button>
+  {/* Date expiration */}
+  <Input
+    type="date"
+    name="date_expiration"
+    value={form.date_expiration}
+    onChange={handleChange}
+  />
 
-      </form>
+  {/* Checkbox */}
+  <div className="checkbox">
+    <label>Ordonnance requise</label>
+
+    <input
+      type="checkbox"
+      checked={form.ordonnance_requise}
+      onChange={(e) =>
+        setForm({
+          ...form,
+          ordonnance_requise: e.target.checked
+        })
+      }
+    />
+  </div>
+
+  {/* Bouton pleine largeur */}
+  <div className="form-full">
+    <Button type="submit">
+      {medicament ? "Modifier" : "Ajouter"}
+    </Button>
+  </div>
+
+</form>
 
     </Modal>
   );
