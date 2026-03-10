@@ -1,11 +1,20 @@
 from rest_framework import serializers
 from .models import Vente, LigneVente
 from apps.medicaments.models import Medicament
+from django.db import transaction
+
 
 class LigneVenteSerializer(serializers.ModelSerializer):
+
+    sous_total = serializers.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        read_only=True
+    )   
+       
     class Meta:
         model = LigneVente
-        fields = ['medicament', 'quantite', 'prix_unitaire']
+        fields = ['medicament', 'quantite', 'prix_unitaire' ,'sous_total']
 
     def validate_quantite(self, value):
         if value <= 0:
@@ -25,7 +34,8 @@ class VenteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Vente
         fields = ['id', 'reference', 'date_vente', 'total_ttc', 'statut', 'notes', 'lignes', 'lignes_vente']
-
+       
+    @transaction.atomic
     def create(self, validated_data):
         lignes_data = validated_data.pop('lignes_vente')
         vente = Vente.objects.create(**validated_data)

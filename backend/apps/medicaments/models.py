@@ -6,7 +6,7 @@ class Medicament(models.Model):
     nom = models.CharField(max_length=200)
     dci = models.CharField(max_length=200)
 
-    categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE)
+    categorie = models.ForeignKey(Categorie, on_delete=models.SET_NULL, null=True, blank=True)
 
     forme = models.CharField(max_length=100)
     dosage = models.CharField(max_length=100)

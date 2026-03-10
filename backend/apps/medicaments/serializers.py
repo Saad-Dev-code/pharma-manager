@@ -4,10 +4,17 @@ from apps.categories.models import Categorie
 
 class MedicamentSerializer(serializers.ModelSerializer):
 
+    categorie_nom = serializers.CharField(source='categorie.nom', read_only=True)
+    categorie = serializers.PrimaryKeyRelatedField(
+        queryset=Categorie.objects.all(),
+        allow_null=True,
+        required=False
+    )
+
     class Meta:
         model = Medicament
         fields = [
-            'id', 'nom', 'dci', 'categorie', 'forme', 'dosage',
+            'id', 'nom', 'dci', 'categorie', 'categorie_nom', 'forme', 'dosage',
             'prix_achat', 'prix_vente', 'stock_actuel', 'stock_minimum',
             'date_expiration', 'ordonnance_requise', 'date_creation', 'est_actif'
         ]
